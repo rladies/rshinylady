@@ -14,4 +14,4 @@ Sys.setenv(MEETUP_KEY = "YOUR_API_KEY_HERE")`
 
 The result should look like the screenshot below.
 
-![](/home/claudia/repos/rshinylady/rladiesapp.png)
+![](rladiesapp.png)
