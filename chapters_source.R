@@ -1,5 +1,3 @@
-# Meetup
-# devtools::install_github("rladies/meetupr")
 library(rvest)
 library(dplyr)
 library(meetupr)
@@ -35,5 +33,20 @@ n_countries <- length(countries)
 # n_members <- sapply(meetups, function(x) meetupr::get_members(x, api_key = api_key))
 
 
+# meetup groups
+api_key <- Sys.getenv("MEETUP_KEY")
+rladies_groups <- get_groups(text = "r-ladies", api_key = api_key)
 
-
+# Cleanup
+rladies_groups <- rladies_groups[grep(pattern = "ladies", 
+                                      x = rladies_groups$urlname,
+                                      ignore.case = TRUE), ]
+rladies_groups <- rladies_groups[grep(pattern = "r", 
+                                      x = rladies_groups$urlname,
+                                      ignore.case = TRUE), ]
+rladies_groups <- rladies_groups[-grep(pattern = "gentlemen",
+                                       x = rladies_groups$urlname,
+                                       ignore.case = TRUE), ]
+rladies_groups <- rladies_groups[-grep(pattern = "night",
+                                       x = rladies_groups$urlname,
+                                       ignore.case = TRUE), ]
