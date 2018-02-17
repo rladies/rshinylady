@@ -8,20 +8,20 @@ library(leaflet)
 ui <- dashboardPage(
   
   dashboardHeader(title = "R-Ladies Dashboard"),
-    
+  
   # Sidebar content
-    dashboardSidebar(
-      sidebarMenu(
-        menuItem("Dashboard", tabName = "dashboard", icon = icon("dashboard"))
-      )
+  dashboardSidebar(
+    sidebarMenu(
+      menuItem("Dashboard", tabName = "dashboard", icon = icon("dashboard"))
+    )
   ),
   
   ## Body content
   dashboardBody(
     fluidRow(
       # A static valueBox
-      valueBox(n_cities, "R-Ladies Cities", icon = icon("map-marker"), color = "purple"),
-      valueBox(n_countries, "R-Ladies Countries", icon = icon("map-o"))
+      valueBox(length(rladies_groups$city), "R-Ladies Cities", icon = icon("map-marker"), color = "purple"),
+      valueBox(length(unique(rladies_groups$country)), "R-Ladies Countries", icon = icon("map-o"))
       
     ),
     
@@ -39,17 +39,18 @@ ui <- dashboardPage(
     )
   )
 )  
-    
-  
-  
 
-  
+
+
+
+
 server <- function(input, output) { 
   
   output$map <- renderLeaflet({
     leaflet(data = rladies_groups) %>% 
       addTiles() %>%
-      addMarkers(~lon, ~lat, label = ~as.character(name))
+      addMarkers(~lon, ~lat, label = ~as.character(name)) 
+    # makeAwesomeIcon(markerColor = "purple")
   })
   
 }
