@@ -70,6 +70,24 @@ body <-
             )
             ),
           tabPanel(
+            title = 'Canada',
+            fluidRow(
+              column(
+                width = 4,
+                # A static valueBox
+                valueBox(nrow(groups_canada), "R-Ladies groups in Canada", 
+                         icon = icon("glyphicon-blackboard"), width = 18
+                ),
+                box("Created at", width = 18, tableOutput("created_canada")
+                )
+              ),
+              column(
+                width = 8,
+                leafletOutput('map_canada',width = 600)
+              )
+            )
+          ),
+          tabPanel(
             title = 'Latin America',
             fluidRow(
               column(
@@ -174,6 +192,12 @@ server <- function(input, output) {
   output$created_usa <- renderTable(created_usa, rownames = FALSE)
   output$map_usa <- renderLeaflet({
     leaflet(groups_usa) %>% 
+      addTiles() %>%
+      addMarkers(~lon, ~lat, label = ~as.character(name)) 
+  })
+  output$created_canada <- renderTable(created_canada, rownames = FALSE)
+  output$map_canada <- renderLeaflet({
+    leaflet(groups_canada) %>% 
       addTiles() %>%
       addMarkers(~lon, ~lat, label = ~as.character(name)) 
   })
