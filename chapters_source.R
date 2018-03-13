@@ -19,4 +19,47 @@ created_usa <- groups_usa %>%
   arrange(desc(dt_created)) %>% 
   select("city", "state", "dt_created", "members")
   
-  
+# Latin America (AR, BR, CL, CO, "CR" "EC" "MX" "PE" "UY" )  
+latam <- sort(unique(rladies_groups[grep("America", rladies_groups$timezone),]$country))
+groups_latam <- rladies_groups %>% 
+  filter(country %in% latam)
+created_latam <- groups_latam %>% 
+  mutate(dt_created = substr(created, 1, 10)) %>% 
+  arrange(desc(dt_created)) %>% 
+  select("city", "state", "dt_created", "members")
+
+# Europe
+europe <- sort(unique(rladies_groups[grep("Europe", rladies_groups$timezone),]$country))
+groups_europe <- rladies_groups %>% 
+  filter(country %in% europe)
+created_europe <- groups_europe %>% 
+  mutate(dt_created = substr(created, 1, 10)) %>% 
+  arrange(desc(dt_created)) %>% 
+  select("city", "state", "dt_created", "members")
+
+# Africa
+africa <- sort(unique(rladies_groups[grep("Africa", rladies_groups$timezone),]$country))
+groups_africa <- rladies_groups %>% 
+  filter(country %in% africa)
+created_africa <- groups_africa %>% 
+  mutate(dt_created = substr(created, 1, 10)) %>% 
+  arrange(desc(dt_created)) %>% 
+  select("city", "state", "dt_created", "members")
+
+# Asia
+asia <- sort(unique(rladies_groups[grep("Asia", rladies_groups$timezone),]$country))
+groups_asia <- rladies_groups %>% 
+  filter(country %in% asia)
+created_asia <- groups_asia %>% 
+  mutate(dt_created = substr(created, 1, 10)) %>% 
+  arrange(desc(dt_created)) %>% 
+  select("city", "state", "dt_created", "members")
+
+# Australia
+australia <- sort(unique(rladies_groups[grep("Australia", rladies_groups$timezone),]$country))
+groups_australia <- rladies_groups %>% 
+  filter(country %in% australia)
+created_australia <- groups_australia %>% 
+  mutate(dt_created = substr(created, 1, 10)) %>% 
+  arrange(desc(dt_created)) %>% 
+  select("city", "state", "dt_created", "members")
