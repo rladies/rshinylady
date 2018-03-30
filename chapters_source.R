@@ -1,52 +1,75 @@
 library(rvest)
-library(dplyr)
+library(tidyverse)
 library(meetupr)
 
-# read the page where the list of chapters is located
-page <- read_html("https://github.com/rladies/starter-kit/blob/master/Current-Chapters.md")
-
-
-## Get the cities of the chapters
-cities <- page %>%
-  html_nodes("#readme strong") %>% 
-  html_text() %>% 
-  tbl_df()
-
-cities_plus_dc <- page %>%
-  html_nodes("h3:nth-child(150) , #readme strong") %>% 
-  html_text() 
-n_cities <- length(cities_plus_dc)
-
-# get the countries of the chapters ----------------------------
-countries <- page %>% 
-  html_nodes("ul+ h2 , p+ h2") %>% 
-  html_text()
-n_countries <- length(countries)
-
-
-# meetup numbers
-# api_key <- readRDS("../../../meetup_api_key.RDS")
-# doc.raw <- RCurl::getURL("https://raw.githubusercontent.com/rladies/starter-kit/master/Current-Chapters.md")
-# meetups <- stringr::str_match_all(doc.raw, "www.meetup.com/(.*?)/")[[1]][,2]
-# meetups <- unique(meetups)
-# 
-# n_members <- sapply(meetups, function(x) meetupr::get_members(x, api_key = api_key))
-
-
 # meetup groups
-api_key <- Sys.getenv("MEETUP_KEY")
-rladies_groups <- get_groups(text = "r-ladies", api_key = api_key)
+api_key <- readRDS("meetup_key.RDS")
+all_rladies_groups <- find_groups(text = "r-ladies", api_key = api_key)
 
 # Cleanup
-rladies_groups <- rladies_groups[grep(pattern = "ladies", 
-                                      x = rladies_groups$urlname,
-                                      ignore.case = TRUE), ]
-rladies_groups <- rladies_groups[grep(pattern = "r", 
-                                      x = rladies_groups$urlname,
-                                      ignore.case = TRUE), ]
-rladies_groups <- rladies_groups[-grep(pattern = "gentlemen",
-                                       x = rladies_groups$urlname,
-                                       ignore.case = TRUE), ]
-rladies_groups <- rladies_groups[-grep(pattern = "night",
-                                       x = rladies_groups$urlname,
-                                       ignore.case = TRUE), ]
+rladies_groups <- all_rladies_groups[grep(pattern = "rladies|r-ladies|rug", 
+                                          x = all_rladies_groups$urlname,
+                                          ignore.case = TRUE), ]
+
+# Each country/continent
+groups_usa <- rladies_groups %>% 
+  filter(country == "US")
+created_usa <- groups_usa %>% 
+  mutate(dt_created = substr(created, 1, 10)) %>% 
+  arrange(desc(dt_created)) %>% 
+  select("city", "state", "country", "dt_created", "members")
+
+# Canada
+canada <- sort(unique(rladies_groups[grep("Canada", rladies_groups$timezone),]$country))
+groups_canada <- rladies_groups %>% 
+  filter(country %in% canada)
+created_canada <- groups_canada %>% 
+  mutate(dt_created = substr(created, 1, 10)) %>% 
+  arrange(desc(dt_created)) %>% 
+  select("city", "state", "country", "dt_created", "members")
+
+
+# Latin America (AR, BR, CL, CO, "CR" "EC" "MX" "PE" "UY" )  
+latam <- sort(unique(rladies_groups[grep("America", rladies_groups$timezone),]$country))
+groups_latam <- rladies_groups %>% 
+  filter(country %in% latam)
+created_latam <- groups_latam %>% 
+  mutate(dt_created = substr(created, 1, 10)) %>% 
+  arrange(desc(dt_created)) %>% 
+  select("city", "state", "country", "dt_created", "members")
+
+# Europe
+europe <- sort(unique(rladies_groups[grep("Europe", rladies_groups$timezone),]$country))
+groups_europe <- rladies_groups %>% 
+  filter(country %in% europe)
+created_europe <- groups_europe %>% 
+  mutate(dt_created = substr(created, 1, 10)) %>% 
+  arrange(desc(dt_created)) %>% 
+  select("city", "state", "country", "dt_created", "members")
+
+# Africa
+africa <- sort(unique(rladies_groups[grep("Africa", rladies_groups$timezone),]$country))
+groups_africa <- rladies_groups %>% 
+  filter(country %in% africa)
+created_africa <- groups_africa %>% 
+  mutate(dt_created = substr(created, 1, 10)) %>% 
+  arrange(desc(dt_created)) %>% 
+  select("city", "state", "country", "dt_created", "members")
+
+# Asia
+asia <- sort(unique(rladies_groups[grep("Asia", rladies_groups$timezone),]$country))
+groups_asia <- rladies_groups %>% 
+  filter(country %in% asia)
+created_asia <- groups_asia %>% 
+  mutate(dt_created = substr(created, 1, 10)) %>% 
+  arrange(desc(dt_created)) %>% 
+  select("city", "state", "country", "dt_created", "members")
+
+# Australia
+australia <- sort(unique(rladies_groups[grep("Australia", rladies_groups$timezone),]$country))
+groups_australia <- rladies_groups %>% 
+  filter(country %in% australia)
+created_australia <- groups_australia %>% 
+  mutate(dt_created = substr(created, 1, 10)) %>% 
+  arrange(desc(dt_created)) %>% 
+  select("city", "state", "country", "dt_created", "members")

@@ -5,6 +5,10 @@
 # Session Data files
 .RData
 
+# other Data files
+*.RDS
+
+
 # Example code in package build process
 *-Ex.R
 
@@ -32,3 +36,9 @@ vignettes/*.pdf
 *.utf8.md
 *.knit.md
 .Rproj.user
+
+/rsconnect/
+
+# Ignore Mac DS_Store files
+.DS_Store
+
