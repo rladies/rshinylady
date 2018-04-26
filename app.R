@@ -25,12 +25,11 @@ body <-
       
       # Front Page
       tabItem(
+        # h2(HTML("R-Ladies!"),
+        #       style = "color: purple;"),
         selected = TRUE, 
-        tabName = "R-Ladies", 
-        navbarPage(
-          title = 'R-Ladies',
-          tabPanel(
-            'TODAY',
+        tabName = "R-Ladies",
+
             fluidRow(
               # A static valueBox
               valueBox(dim(rladies_groups)[1], "R-Ladies groups on meetup.com", 
@@ -43,7 +42,7 @@ body <-
                        icon = icon("users"), width = 3)
             ),
             leafletOutput('map')
-          ))),
+          ),
       
       # Second TAB
       tabItem(
