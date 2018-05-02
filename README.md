@@ -3,7 +3,7 @@
 Before running this app, install meetupr package
 
 ```r
-devtools::install_github("rladies/meetupr")`
+devtools::install_github("rladies/meetupr")
 ```
 
 then get a meetup API key and set it as an environmental variable
