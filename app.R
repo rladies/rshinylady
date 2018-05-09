@@ -41,7 +41,7 @@ body <-
           valueBox(sum(rladies_groups$members), "R-Ladies members on meetup.com", 
                    icon = icon("users"), width = 3)
         ),
-        leafletOutput('map', height = 500)
+        leafletOutput('map', height = 700)
       ),
       
       # Second sidebar tab - Region
