@@ -67,7 +67,7 @@ body <-
                                       ),
                                       box("Created at", width = 18, tableOutput("created_usa"))
                                     ),
-                                    column(width = 8,
+                                    column(width = 6,
                                       leafletOutput('map_usa')
                                     )
                                   )
@@ -205,43 +205,43 @@ server <- function(input, output) {
       addTiles() %>%
       addAwesomeMarkers(~lon, ~lat, label = ~as.character(name), icon = icons)
   })
-  output$created_usa <- renderTable(created_usa, rownames = FALSE)
+  output$created_usa <- renderTable(created_usa, striped = TRUE, hover = TRUE)
   output$map_usa <- renderLeaflet({
     leaflet(groups_usa) %>% 
       addTiles() %>%
       addMarkers(~lon, ~lat, label = ~as.character(name)) 
   })
-  output$created_canada <- renderTable(created_canada, rownames = FALSE)
+  output$created_canada <- renderTable(created_canada, striped = TRUE, hover = TRUE)
   output$map_canada <- renderLeaflet({
     leaflet(groups_canada) %>% 
       addTiles() %>%
       addMarkers(~lon, ~lat, label = ~as.character(name)) 
   })
-  output$created_latam <- renderTable(created_latam, rownames = FALSE)
+  output$created_latam <- renderTable(created_latam, striped = TRUE, hover = TRUE)
   output$map_latam <- renderLeaflet({
     leaflet(groups_latam) %>% 
       addTiles() %>%
       addMarkers(~lon, ~lat, label = ~as.character(name)) 
   })
-  output$created_europe <- renderTable(created_europe, rownames = FALSE)
+  output$created_europe <- renderTable(created_europe, striped = TRUE, hover = TRUE)
   output$map_europe <- renderLeaflet({
     leaflet(groups_europe) %>%
       addTiles() %>%
       addMarkers(~lon, ~lat, label = ~as.character(name))
   })
-  output$created_africa <- renderTable(created_africa, rownames = FALSE)
+  output$created_africa <- renderTable(created_africa, striped = TRUE, hover = TRUE)
   output$map_africa <- renderLeaflet({
     leaflet(groups_africa) %>% 
       addTiles() %>%
       addMarkers(~lon, ~lat, label = ~as.character(name)) 
   })
-  output$created_asia <- renderTable(created_asia, rownames = FALSE)
+  output$created_asia <- renderTable(created_asia, striped = TRUE, hover = TRUE)
   output$map_asia <- renderLeaflet({
     leaflet(groups_asia) %>% 
       addTiles() %>%
       addMarkers(~lon, ~lat, label = ~as.character(name)) 
   })
-  output$created_australia <- renderTable(created_australia, rownames = FALSE)
+  output$created_australia <- renderTable(created_australia, striped = TRUE, hover = TRUE)
   output$map_australia <- renderLeaflet({
     leaflet(groups_australia) %>% 
       addTiles() %>%
