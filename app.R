@@ -33,7 +33,7 @@ body <-
         fluidRow(
           # A static valueBox
           valueBox(dim(rladies_groups)[1], "R-Ladies groups on meetup.com", 
-                   icon = icon("glyphicon-blackboard"), width = 3),
+                   icon("meetup", lib = "font-awesome"), width = 3),
           valueBox(length(unique(rladies_groups$country)), "R-Ladies Countries", 
                    icon = icon("map-o"), width = 3),
           valueBox(length(rladies_groups$city), "R-Ladies Cities", 
@@ -41,7 +41,7 @@ body <-
           valueBox(sum(rladies_groups$members), "R-Ladies members on meetup.com", 
                    icon = icon("users"), width = 3)
         ),
-        leafletOutput('map')
+        leafletOutput('map', height = 500)
       ),
       
       # Second sidebar tab - Region
