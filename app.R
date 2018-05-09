@@ -31,6 +31,16 @@ body <-
               selected = TRUE, 
         
         fluidRow(
+          absolutePanel(style = "z-index: 2000", fixed = TRUE, draggable = TRUE,
+                        top = 10, left = "auto", right = 20, width = "250px",
+                        div(
+                          tags$a(target="_blank", 
+                                 href = "http://www.rladies.org", 
+                                 tags$img(src="R-LadiesGlobal_RBG_online_LogoWithText.png", 
+                                          height = "30px", id = "logo") 
+                          )
+                        )
+          ),
           # A static valueBox
           valueBox(dim(rladies_groups)[1], "R-Ladies groups on meetup.com", 
                    icon("meetup", lib = "font-awesome"), width = 3),
@@ -50,18 +60,15 @@ body <-
                          
                          tabPanel(title = 'USA',
                                   fluidRow(
-                                    column(
-                                      width = 4,
+                                    column(width = 4,
                                       # A static valueBox
                                       valueBox(nrow(groups_usa), "R-Ladies groups in the US", 
                                                icon = icon("glyphicon-blackboard"), width = 18
                                       ),
-                                      box("Created at", width = 18, tableOutput("created_usa")
-                                      )
+                                      box("Created at", width = 18, tableOutput("created_usa"))
                                     ),
-                                    column(
-                                      width = 8,
-                                      leafletOutput('map_usa',width = 600)
+                                    column(width = 8,
+                                      leafletOutput('map_usa')
                                     )
                                   )
                          ),
@@ -78,7 +85,7 @@ body <-
                                     ),
                                     column(
                                       width = 8,
-                                      leafletOutput('map_canada',width = 600)
+                                      leafletOutput('map_canada')
                                     )
                                   )
                          ),
@@ -95,7 +102,8 @@ body <-
                                     ),
                                     column(
                                       width = 8,
-                                      leafletOutput('map_latam',width = 600))
+                                      leafletOutput('map_latam')
+                                      )
                                   )
                          ),
                          tabPanel(title = 'Europe',
@@ -111,7 +119,8 @@ body <-
                                     ),
                                     column(
                                       width = 8,
-                                      leafletOutput('map_europe',width = 600))
+                                      leafletOutput('map_europe')
+                                      )
                                   )
                          ),
                          tabPanel(title = 'Africa',
@@ -127,7 +136,7 @@ body <-
                                     ),
                                     column(
                                       width = 8,
-                                      leafletOutput('map_africa',width = 600))
+                                      leafletOutput('map_africa'))
                                   )
                          ),
                          tabPanel(title = 'Asia',
@@ -143,7 +152,7 @@ body <-
                                     ),
                                     column(
                                       width = 8,
-                                      leafletOutput('map_asia',width = 600))
+                                      leafletOutput('map_asia'))
                                   )
                          ),
                          tabPanel(title = 'Australia',
@@ -159,7 +168,7 @@ body <-
                                     ),
                                     column(
                                       width = 8,
-                                      leafletOutput('map_australia',width = 600))
+                                      leafletOutput('map_australia'))
                                   )
                          )
               )
