@@ -184,15 +184,17 @@ body <-
 
 ui <- dashboardPage(skin = "purple", header, sidebar, body)
 
-
+icons <- awesomeIcons(icon = "whatever",
+                      iconColor = "black",
+                      library = "ion",
+                      markerColor = "purple")
 
 server <- function(input, output) { 
   
   output$map <- renderLeaflet({
     leaflet(data = rladies_groups) %>% 
       addTiles() %>%
-      addMarkers(~lon, ~lat, label = ~as.character(name)) 
-    # makeAwesomeIcon(markerColor = "purple")
+      addAwesomeMarkers(~lon, ~lat, label = ~as.character(name), icon = icons)
   })
   output$created_usa <- renderTable(created_usa, rownames = FALSE)
   output$map_usa <- renderLeaflet({
