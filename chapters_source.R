@@ -42,6 +42,11 @@ created_latam <- groups_latam %>%
 europe <- sort(unique(rladies_groups[grep("Europe", rladies_groups$timezone),]$country))
 groups_europe <- rladies_groups %>% 
   filter(country %in% europe)
+# Add Tbilisi to the Europe group
+# for some reason Tbilisi uses the timezone `Asia/Tbilisi` therefore
+# it got categorized as Asia. However, Tbilisi is located in Europe
+groups_europe <- rbind(groups_europe,
+                       rladies_groups %>% filter(city == "Tbilisi"))
 created_europe <- groups_europe %>% 
   mutate(dt_created = substr(created, 1, 10)) %>% 
   arrange(desc(dt_created)) %>% 
@@ -59,7 +64,8 @@ created_africa <- groups_africa %>%
 # Asia
 asia <- sort(unique(rladies_groups[grep("Asia", rladies_groups$timezone),]$country))
 groups_asia <- rladies_groups %>% 
-  filter(country %in% asia)
+  filter(country %in% asia) %>% 
+  filter(city != "Tbilisi") # Remove Tbilisi from the Asia group
 created_asia <- groups_asia %>% 
   mutate(dt_created = substr(created, 1, 10)) %>% 
   arrange(desc(dt_created)) %>% 
