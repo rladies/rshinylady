@@ -12,8 +12,15 @@ rladies_groups <- all_rladies_groups[grep(pattern = "rladies|r-ladies|rug",
                                           ignore.case = TRUE), ]
 
 # Each country/continent
+# We need to exclude remote 
+# The R-Ladies chapter is Remote, ie, they don't have a specific location since
+# everything the group does is online. 
+# But when you create a group on meetup.com, you can't leave the location blank, 
+# you need to specify a city. 
+# Therefore, for the Remote chapter, we used San Francisco as their location even 
+# though there are not "located" in San Francisco.
 groups_usa <- rladies_groups %>% 
-  filter(country == "US")
+  filter(country == "US", name != "R-Ladies Remote")
 created_usa <- groups_usa %>% 
   mutate(dt_created = substr(created, 1, 10)) %>% 
   arrange(desc(dt_created)) %>% 
