@@ -12,12 +12,28 @@ rladies_groups <- all_rladies_groups[grep(pattern = "rladies|r-ladies|rug",
                                           ignore.case = TRUE), ]
 
 # Each country/continent
+# We need to exclude remote 
+# The R-Ladies chapter is Remote, ie, they don't have a specific location since
+# everything the group does is online. 
+# But when you create a group on meetup.com, you can't leave the location blank, 
+# you need to specify a city. 
+# Therefore, for the Remote chapter, we used San Francisco as their location even 
+# though there are not "located" in San Francisco.
 groups_usa <- rladies_groups %>% 
-  filter(country == "US")
+  filter(country == "US", name != "R-Ladies Remote")
 created_usa <- groups_usa %>% 
   mutate(dt_created = substr(created, 1, 10)) %>% 
   arrange(desc(dt_created)) %>% 
   select("city", "state", "country", "dt_created", "members")
+
+# For subsetting, the follwing countries, I'm using the time zone as a proxy
+# of where the chapter is located
+# unique(rladies_groups$timezone)
+# unique(sub(pattern = "\\/.*", "", unique(rladies_groups$timezone)))
+# [1] "Europe"    "America"   "Australia" "Africa"    
+#  "Canada"    "Asia"      "US"        "Pacific" 
+# Please note that Auckland has TZ "Pacific/Auckland"
+
 
 # Canada
 canada <- sort(unique(rladies_groups[grep("Canada", rladies_groups$timezone),]$country))
@@ -71,8 +87,8 @@ created_asia <- groups_asia %>%
   arrange(desc(dt_created)) %>% 
   select("city", "state", "country", "dt_created", "members")
 
-# Australia
-australia <- sort(unique(rladies_groups[grep("Australia", rladies_groups$timezone),]$country))
+#  Australia/Oceania
+australia <- sort(unique(rladies_groups[grep("Australia|Pacific/Auckland", rladies_groups$timezone),]$country))
 groups_australia <- rladies_groups %>% 
   filter(country %in% australia)
 created_australia <- groups_australia %>% 
