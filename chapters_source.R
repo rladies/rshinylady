@@ -26,6 +26,15 @@ created_usa <- groups_usa %>%
   arrange(desc(dt_created)) %>% 
   select("city", "state", "country", "dt_created", "members")
 
+# For subsetting, the follwing countries, I'm using the time zone as a proxy
+# of where the chapter is located
+# unique(rladies_groups$timezone)
+# unique(sub(pattern = "\\/.*", "", unique(rladies_groups$timezone)))
+# [1] "Europe"    "America"   "Australia" "Africa"    
+#  "Canada"    "Asia"      "US"        "Pacific" 
+# Please note that Auckland has TZ "Pacific/Auckland"
+
+
 # Canada
 canada <- sort(unique(rladies_groups[grep("Canada", rladies_groups$timezone),]$country))
 groups_canada <- rladies_groups %>% 
@@ -78,8 +87,8 @@ created_asia <- groups_asia %>%
   arrange(desc(dt_created)) %>% 
   select("city", "state", "country", "dt_created", "members")
 
-# Australia
-australia <- sort(unique(rladies_groups[grep("Australia", rladies_groups$timezone),]$country))
+#  Australia/Oceania
+australia <- sort(unique(rladies_groups[grep("Australia|Pacific/Auckland", rladies_groups$timezone),]$country))
 groups_australia <- rladies_groups %>% 
   filter(country %in% australia)
 created_australia <- groups_australia %>% 
