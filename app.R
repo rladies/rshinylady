@@ -2,6 +2,7 @@ source("chapters_source.R")
 library(shinydashboard)
 library(shiny)
 library(leaflet)
+library(mapview)
 
 ## ui.R ##
 
@@ -51,7 +52,9 @@ body <-
           valueBox(sum(rladies_groups$members), "R-Ladies members on meetup.com", 
                    icon = icon("users"), width = 3)
         ),
-        leafletOutput('map', height = 700)
+        leafletOutput('map', height = 700),
+        downloadButton( outputId = "dl")
+        
       ),
       
       # Second sidebar tab - Region
@@ -199,12 +202,71 @@ icons <- awesomeIcons(icon = "whatever",
                       markerColor = "purple")
 
 server <- function(input, output) { 
+  # Main Page Map 
   
-  output$map <- renderLeaflet({
+  # Create foundational leaflet map
+  # and store it as a reactive expression
+  foundational_map <- reactive({
     leaflet(data = rladies_groups) %>% 
       addTiles() %>%
       addAwesomeMarkers(~lon, ~lat, label = ~as.character(name), icon = icons)
-  })
+  }) # end of foundational.map()
+  
+  # render foundational leaflet map
+  output$map <- leaflet::renderLeaflet({
+    
+    # call reactive map
+    foundational_map()
+    
+  }) # end of render leaflet
+  
+  # store the current user-created version
+  # of the Leaflet map for download in 
+  # a reactive expression
+  user_created_map <- reactive({
+    
+    # call the foundational Leaflet map
+    foundational_map() 
+    # %>%
+    #   
+    #   # store the view based on UI
+    #   setView( lng = input$map_center$lng
+    #            ,  lat = input$map_center$lat
+    #            , zoom = input$map_zoom
+    #   )
+    
+  }) # end of creating user.created.map()
+  
+  
+  # output$map <- renderLeaflet({
+  #   leaflet(data = rladies_groups) %>% 
+  #     addTiles() %>%
+  #     addAwesomeMarkers(~lon, ~lat, label = ~as.character(name), icon = icons)
+  # })
+  
+  
+  # create the output file name
+  # and specify how the download button will take
+  # a screenshot - using the mapview::mapshot() function
+  # and save as a PDF
+  output$dl <- downloadHandler(
+    filename = paste0( Sys.Date()
+                       , "_customLeafletmap"
+                       , ".pdf"
+    )
+    
+    , content = function(file) {
+      mapshot( x = user_created_map()
+               , file = file
+               , cliprect = "viewport" # the clipping rectangle matches the height & width from the viewing port
+               , selfcontained = FALSE # when this was not specified, the function for produced a PDF of two pages: one of the leaflet map, the other a blank page.
+      )
+    } # end of content() function
+  ) # end of downloadHandler() function
+  
+  
+  
+  # Specific Maps
   output$created_usa <- renderTable(created_usa, striped = TRUE, hover = TRUE)
   output$map_usa <- renderLeaflet({
     leaflet(groups_usa) %>% 
@@ -248,8 +310,9 @@ server <- function(input, output) {
       addMarkers(~lon, ~lat, label = ~as.character(name)) 
   })
   
+} # end of server
   
-}
+# }
 
 
 shinyApp(ui, server)
