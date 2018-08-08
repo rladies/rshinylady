@@ -155,7 +155,7 @@ body <-
                                       leafletOutput('map_asia'))
                                   )
                          ),
-                         tabPanel(title = 'Australia',
+                         tabPanel(title = 'Australia/Oceania',
                                   fluidRow(
                                     column(
                                       width = 4,
