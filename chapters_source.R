@@ -7,10 +7,9 @@ api_key <- readRDS("meetup_key.RDS")
 all_rladies_groups <- find_groups(text = "r-ladies", api_key = api_key)
 
 # Cleanup
-rladies_groups <- all_rladies_groups[grep(pattern = "rladies|r-ladies|rug", 
-                                          x = all_rladies_groups$urlname,
+rladies_groups <- all_rladies_groups[grep(pattern = "rladies|r-ladies", 
+                                          x = all_rladies_groups$name,
                                           ignore.case = TRUE), ]
-
 # Each country/continent
 # We need to exclude remote 
 # The R-Ladies chapter is Remote, ie, they don't have a specific location since
