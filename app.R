@@ -2,6 +2,7 @@ source("chapters_source.R")
 library(shinydashboard)
 library(shiny)
 library(leaflet)
+library(htmltools)
 
 ## ui.R ##
 
@@ -198,54 +199,64 @@ icons <- awesomeIcons(icon = "whatever",
                       library = "ion",
                       markerColor = "purple")
 
+# Set up popup content
+
+rladies_groups$fullurl <- paste0("https://www.meetup.com/", rladies_groups$urlname, "/")
+rladies_groups$url <- paste0("<a href='", rladies_groups$fullurl, "'>", rladies_groups$name, "</a>")
+
+popup_content <- paste0("<b>", rladies_groups$url, "</b>", "<br/>",
+                       "Created: ", as.Date(rladies_groups$created), "<br/>",
+                       "Members: ", rladies_groups$members
+)
+
 server <- function(input, output) { 
   
   output$map <- renderLeaflet({
     leaflet(data = rladies_groups) %>% 
       addTiles() %>%
-      addAwesomeMarkers(~lon, ~lat, label = ~as.character(name), icon = icons)
+      addAwesomeMarkers(~lon, ~lat, popup = popup_content, icon = icons)
   })
   output$created_usa <- renderTable(created_usa, striped = TRUE, hover = TRUE)
   output$map_usa <- renderLeaflet({
     leaflet(groups_usa) %>% 
       addTiles() %>%
-      addMarkers(~lon, ~lat, label = ~as.character(name)) 
+      addMarkers(~lon, ~lat, popup = popup_content) 
   })
   output$created_canada <- renderTable(created_canada, striped = TRUE, hover = TRUE)
   output$map_canada <- renderLeaflet({
     leaflet(groups_canada) %>% 
       addTiles() %>%
-      addMarkers(~lon, ~lat, label = ~as.character(name)) 
+      addMarkers(~lon, ~lat, popup = popup_content) 
   })
   output$created_latam <- renderTable(created_latam, striped = TRUE, hover = TRUE)
   output$map_latam <- renderLeaflet({
     leaflet(groups_latam) %>% 
       addTiles() %>%
-      addMarkers(~lon, ~lat, label = ~as.character(name)) 
+      addMarkers(~lon, ~lat, popup = popup_content) 
   })
   output$created_europe <- renderTable(created_europe, striped = TRUE, hover = TRUE)
   output$map_europe <- renderLeaflet({
     leaflet(groups_europe) %>%
       addTiles() %>%
-      addMarkers(~lon, ~lat, label = ~as.character(name))
+      addMarkers(~lon, ~lat, popup = popup_content)
   })
   output$created_africa <- renderTable(created_africa, striped = TRUE, hover = TRUE)
   output$map_africa <- renderLeaflet({
     leaflet(groups_africa) %>% 
       addTiles() %>%
-      addMarkers(~lon, ~lat, label = ~as.character(name)) 
+      addMarkers(~lon, ~lat, popup = popup_content) 
   })
   output$created_asia <- renderTable(created_asia, striped = TRUE, hover = TRUE)
   output$map_asia <- renderLeaflet({
     leaflet(groups_asia) %>% 
       addTiles() %>%
-      addMarkers(~lon, ~lat, label = ~as.character(name)) 
+      addMarkers(~lon, ~lat, popup = popup_content) 
   })
   output$created_australia <- renderTable(created_australia, striped = TRUE, hover = TRUE)
   output$map_australia <- renderLeaflet({
     leaflet(groups_australia) %>% 
       addTiles() %>%
-      addMarkers(~lon, ~lat, label = ~as.character(name)) 
+      addMarkers(~lon, ~lat, popup = popup_content) 
   })
   
   
