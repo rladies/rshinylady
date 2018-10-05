@@ -11,6 +11,11 @@ all_rladies_groups <- find_groups(text = "r-ladies", api_key = api_key)
 rladies_groups <- all_rladies_groups[grep(pattern = "rladies|r-ladies", 
                                           x = all_rladies_groups$name,
                                           ignore.case = TRUE), ]
+
+# Add extra columns to set up popup content in the app
+rladies_groups$fullurl <- paste0("https://www.meetup.com/", rladies_groups$urlname, "/")
+rladies_groups$url <- paste0("<a href='", rladies_groups$fullurl, "'>", rladies_groups$name, "</a>")
+
 # Each country/continent
 # We need to exclude remote 
 # The R-Ladies chapter is Remote, ie, they don't have a specific location since
