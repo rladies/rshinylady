@@ -199,6 +199,7 @@ icons <- awesomeIcons(icon = "whatever",
                       library = "ion",
                       markerColor = "purple")
 
+
 # Set up popup content for global and regional maps
 global_popups <- paste0("<b>", rladies_groups$url, "</b>", "<br/>",
                        "Created: ", as.Date(rladies_groups$created), "<br/>",
@@ -232,6 +233,17 @@ australia_popups <- paste0("<b>", groups_australia$url, "</b>", "<br/>",
                       "Created: ", as.Date(groups_australia$created), "<br/>",
                       "Members: ", groups_australia$members
 )
+
+
+# # Set up popup content
+
+# rladies_groups$fullurl <- paste0("https://www.meetup.com/", rladies_groups$urlname, "/")
+# rladies_groups$url <- paste0("<a href='", rladies_groups$fullurl, "'>", rladies_groups$name, "</a>")
+
+# popup_content <- paste0("<b>", rladies_groups$url, "</b>", "<br/>",
+#                        "Created: ", as.Date(rladies_groups$created), "<br/>",
+#                        "Members: ", rladies_groups$members
+# )
 
 
 server <- function(input, output) { 
