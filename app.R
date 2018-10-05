@@ -199,64 +199,101 @@ icons <- awesomeIcons(icon = "whatever",
                       library = "ion",
                       markerColor = "purple")
 
-# Set up popup content
 
-rladies_groups$fullurl <- paste0("https://www.meetup.com/", rladies_groups$urlname, "/")
-rladies_groups$url <- paste0("<a href='", rladies_groups$fullurl, "'>", rladies_groups$name, "</a>")
-
-popup_content <- paste0("<b>", rladies_groups$url, "</b>", "<br/>",
+# Set up popup content for global and regional maps
+global_popups <- paste0("<b>", rladies_groups$url, "</b>", "<br/>",
                        "Created: ", as.Date(rladies_groups$created), "<br/>",
                        "Members: ", rladies_groups$members
 )
+usa_popups <- paste0("<b>", groups_usa$url, "</b>", "<br/>",
+                               "Created: ", as.Date(groups_usa$created), "<br/>",
+                               "Members: ", groups_usa$members
+)
+canada_popups <- paste0("<b>", groups_canada$url, "</b>", "<br/>",
+                     "Created: ", as.Date(groups_canada$created), "<br/>",
+                     "Members: ", groups_canada$members
+)
+latam_popups <- paste0("<b>", groups_latam$url, "</b>", "<br/>",
+                     "Created: ", as.Date(groups_latam$created), "<br/>",
+                     "Members: ", groups_latam$members
+)
+europe_popups <- paste0("<b>", groups_europe$url, "</b>", "<br/>",
+                     "Created: ", as.Date(groups_europe$created), "<br/>",
+                     "Members: ", groups_europe$members
+)
+africa_popups <- paste0("<b>", groups_africa$url, "</b>", "<br/>",
+                     "Created: ", as.Date(groups_africa$created), "<br/>",
+                     "Members: ", groups_africa$members
+)
+asia_popups <- paste0("<b>", groups_asia$url, "</b>", "<br/>",
+                     "Created: ", as.Date(groups_asia$created), "<br/>",
+                     "Members: ", groups_asia$members
+)
+australia_popups <- paste0("<b>", groups_australia$url, "</b>", "<br/>",
+                      "Created: ", as.Date(groups_australia$created), "<br/>",
+                      "Members: ", groups_australia$members
+)
+
+
+# # Set up popup content
+
+# rladies_groups$fullurl <- paste0("https://www.meetup.com/", rladies_groups$urlname, "/")
+# rladies_groups$url <- paste0("<a href='", rladies_groups$fullurl, "'>", rladies_groups$name, "</a>")
+
+# popup_content <- paste0("<b>", rladies_groups$url, "</b>", "<br/>",
+#                        "Created: ", as.Date(rladies_groups$created), "<br/>",
+#                        "Members: ", rladies_groups$members
+# )
+
 
 server <- function(input, output) { 
   
   output$map <- renderLeaflet({
     leaflet(data = rladies_groups) %>% 
       addTiles() %>%
-      addAwesomeMarkers(~lon, ~lat, popup = popup_content, icon = icons)
+      addAwesomeMarkers(~lon, ~lat, popup = global_popups, icon = icons)
   })
   output$created_usa <- renderTable(created_usa, striped = TRUE, hover = TRUE)
   output$map_usa <- renderLeaflet({
     leaflet(groups_usa) %>% 
       addTiles() %>%
-      addMarkers(~lon, ~lat, popup = popup_content) 
+      addMarkers(~lon, ~lat, popup = usa_popups) 
   })
   output$created_canada <- renderTable(created_canada, striped = TRUE, hover = TRUE)
   output$map_canada <- renderLeaflet({
     leaflet(groups_canada) %>% 
       addTiles() %>%
-      addMarkers(~lon, ~lat, popup = popup_content) 
+      addMarkers(~lon, ~lat, popup = canada_popups) 
   })
   output$created_latam <- renderTable(created_latam, striped = TRUE, hover = TRUE)
   output$map_latam <- renderLeaflet({
     leaflet(groups_latam) %>% 
       addTiles() %>%
-      addMarkers(~lon, ~lat, popup = popup_content) 
+      addMarkers(~lon, ~lat, popup = latam_popups) 
   })
   output$created_europe <- renderTable(created_europe, striped = TRUE, hover = TRUE)
   output$map_europe <- renderLeaflet({
     leaflet(groups_europe) %>%
       addTiles() %>%
-      addMarkers(~lon, ~lat, popup = popup_content)
+      addMarkers(~lon, ~lat, popup = europe_popups)
   })
   output$created_africa <- renderTable(created_africa, striped = TRUE, hover = TRUE)
   output$map_africa <- renderLeaflet({
     leaflet(groups_africa) %>% 
       addTiles() %>%
-      addMarkers(~lon, ~lat, popup = popup_content) 
+      addMarkers(~lon, ~lat, popup = africa_popups) 
   })
   output$created_asia <- renderTable(created_asia, striped = TRUE, hover = TRUE)
   output$map_asia <- renderLeaflet({
     leaflet(groups_asia) %>% 
       addTiles() %>%
-      addMarkers(~lon, ~lat, popup = popup_content) 
+      addMarkers(~lon, ~lat, popup = asia_popups) 
   })
   output$created_australia <- renderTable(created_australia, striped = TRUE, hover = TRUE)
   output$map_australia <- renderLeaflet({
     leaflet(groups_australia) %>% 
       addTiles() %>%
-      addMarkers(~lon, ~lat, popup = popup_content) 
+      addMarkers(~lon, ~lat, popup = australia_popups) 
   })
   
   
