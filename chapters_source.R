@@ -4,7 +4,7 @@ library(meetupr)
 
 # meetup groups
 # `api_key <- readRDS("meetup_key.RDS")` this code doesn't work if you follow the readme instructions to set up your API key
-api_key <- Sys.getenv("MEETUP_KEY")
+api_key <- Sys.getenv("meetup_key")
 all_rladies_groups <- find_groups(text = "r-ladies", api_key = api_key)
 
 # Cleanup
