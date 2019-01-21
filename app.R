@@ -3,6 +3,7 @@ library(shinydashboard)
 library(shiny)
 library(leaflet)
 library(htmltools)
+library(DT)
 
 ## ui.R ##
 
@@ -66,7 +67,7 @@ body <-
                                       valueBox(nrow(groups_usa), "R-Ladies groups in the US", 
                                                icon = icon("glyphicon-blackboard"), width = 18
                                       ),
-                                      box("Created at", width = 18, tableOutput("created_usa"))
+                                      box("Created at", width = 18, DT::dataTableOutput("created_usa"))
                                     ),
                                     column(width = 6,
                                       leafletOutput('map_usa')
@@ -81,7 +82,7 @@ body <-
                                       valueBox(nrow(groups_canada), "R-Ladies groups in Canada", 
                                                icon = icon("glyphicon-blackboard"), width = 18
                                       ),
-                                      box("Created at", width = 18, tableOutput("created_canada")
+                                      box("Created at", width = 18, DT::dataTableOutput("created_canada")
                                       )
                                     ),
                                     column(
@@ -98,7 +99,7 @@ body <-
                                       valueBox(nrow(groups_latam), "R-Ladies groups in Latin America", 
                                                icon = icon("glyphicon-blackboard"), width = 18
                                       ),
-                                      box("Created at", width = 18, tableOutput("created_latam")
+                                      box("Created at", width = 18, DT::dataTableOutput("created_latam")
                                       )
                                     ),
                                     column(
@@ -115,7 +116,7 @@ body <-
                                       valueBox(nrow(groups_europe), "R-Ladies groups in Europe",
                                                icon = icon("glyphicon-blackboard"), width = 18
                                       ),
-                                      box("Created at", width = 18, tableOutput("created_europe")
+                                      box("Created at", width = 18, DT::dataTableOutput("created_europe")
                                       )
                                     ),
                                     column(
@@ -132,7 +133,7 @@ body <-
                                       valueBox(nrow(groups_africa), "R-Ladies groups in Africa", 
                                                icon = icon("glyphicon-blackboard"), width = 18
                                       ),
-                                      box("Created at", width = 18, tableOutput("created_africa")
+                                      box("Created at", width = 18, DT::dataTableOutput("created_africa")
                                       )
                                     ),
                                     column(
@@ -148,7 +149,7 @@ body <-
                                       valueBox(nrow(groups_asia), "R-Ladies groups in Asia",
                                                icon = icon("glyphicon-blackboard"), width = 18
                                       ),
-                                      box("Created at", width = 18, tableOutput("created_asia")
+                                      box("Created at", width = 18, DT::dataTableOutput("created_asia")
                                       )
                                     ),
                                     column(
@@ -164,7 +165,7 @@ body <-
                                       valueBox(nrow(groups_australia), "R-Ladies groups in Australia",
                                                icon = icon("glyphicon-blackboard"), width = 18
                                       ),
-                                      box("Created at", width = 18, tableOutput("created_australia")
+                                      box("Created at", width = 18, DT::dataTableOutput("created_australia")
                                       )
                                     ),
                                     column(
@@ -253,43 +254,43 @@ server <- function(input, output) {
       addTiles() %>%
       addAwesomeMarkers(~lon, ~lat, popup = global_popups, icon = icons)
   })
-  output$created_usa <- renderTable(created_usa, striped = TRUE, hover = TRUE)
+  output$created_usa <- DT::renderDataTable(created_usa)
   output$map_usa <- renderLeaflet({
     leaflet(groups_usa) %>% 
       addTiles() %>%
       addMarkers(~lon, ~lat, popup = usa_popups) 
   })
-  output$created_canada <- renderTable(created_canada, striped = TRUE, hover = TRUE)
+  output$created_canada <- DT::renderDataTable(created_canada)
   output$map_canada <- renderLeaflet({
     leaflet(groups_canada) %>% 
       addTiles() %>%
       addMarkers(~lon, ~lat, popup = canada_popups) 
   })
-  output$created_latam <- renderTable(created_latam, striped = TRUE, hover = TRUE)
+  output$created_latam <- DT::renderDataTable(created_latam)
   output$map_latam <- renderLeaflet({
     leaflet(groups_latam) %>% 
       addTiles() %>%
       addMarkers(~lon, ~lat, popup = latam_popups) 
   })
-  output$created_europe <- renderTable(created_europe, striped = TRUE, hover = TRUE)
+  output$created_europe <- DT::renderDataTable(created_europe)
   output$map_europe <- renderLeaflet({
     leaflet(groups_europe) %>%
       addTiles() %>%
       addMarkers(~lon, ~lat, popup = europe_popups)
   })
-  output$created_africa <- renderTable(created_africa, striped = TRUE, hover = TRUE)
+  output$created_africa <- DT::renderDataTable(created_africa)
   output$map_africa <- renderLeaflet({
     leaflet(groups_africa) %>% 
       addTiles() %>%
       addMarkers(~lon, ~lat, popup = africa_popups) 
   })
-  output$created_asia <- renderTable(created_asia, striped = TRUE, hover = TRUE)
+  output$created_asia <- DT::renderDataTable(created_asia)
   output$map_asia <- renderLeaflet({
     leaflet(groups_asia) %>% 
       addTiles() %>%
       addMarkers(~lon, ~lat, popup = asia_popups) 
   })
-  output$created_australia <- renderTable(created_australia, striped = TRUE, hover = TRUE)
+  output$created_australia <- DT::renderDataTable(created_australia)
   output$map_australia <- renderLeaflet({
     leaflet(groups_australia) %>% 
       addTiles() %>%
