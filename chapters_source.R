@@ -8,7 +8,7 @@ api_key <- Sys.getenv("meetup_key")
 all_rladies_groups <- find_groups(text = "r-ladies", api_key = api_key)
 
 # Cleanup
-rladies_groups <- all_rladies_groups[grep(pattern = "rladies|r-ladies", 
+rladies_groups <- all_rladies_groups[grep(pattern = "rladies|r-ladies|r ladies", 
                                           x = all_rladies_groups$name,
                                           ignore.case = TRUE), ]
 
