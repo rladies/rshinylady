@@ -2,9 +2,10 @@ library(rvest)
 library(tidyverse)
 library(meetupr)
 
-# meetup groups
-# `api_key <- readRDS("meetup_key.RDS")` this code doesn't work if you follow the readme instructions to set up your API key
+# meetup groups ----------------------------------------------------------
 api_key <- Sys.getenv("meetup_key")
+# this is needed when you deploy the shiny app
+# api_key <- readRDS("meetup_key.RDS")
 all_rladies_groups <- find_groups(text = "r-ladies", api_key = api_key)
 
 # Cleanup
