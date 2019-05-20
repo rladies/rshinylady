@@ -62,12 +62,12 @@ body <-
                          
                          tabPanel(title = 'USA',
                                   fluidRow(
-                                    column(width = 4,
+                                    column(width = 6,
                                       # A static valueBox
                                       valueBox(nrow(groups_usa), "R-Ladies groups in the US", 
                                                icon = icon("glyphicon-blackboard"), width = 18
                                       ),
-                                      box("Created at", width = 18, DT::dataTableOutput("created_usa"))
+                                      DT::dataTableOutput("created_usa")
                                     ),
                                     column(width = 6,
                                       leafletOutput('map_usa')
@@ -77,16 +77,15 @@ body <-
                          tabPanel(title = 'Canada',
                                   fluidRow(
                                     column(
-                                      width = 4,
+                                      width = 6,
                                       # A static valueBox
                                       valueBox(nrow(groups_canada), "R-Ladies groups in Canada", 
                                                icon = icon("glyphicon-blackboard"), width = 18
                                       ),
-                                      box("Created at", width = 18, DT::dataTableOutput("created_canada")
-                                      )
+                                      DT::dataTableOutput("created_canada")
                                     ),
                                     column(
-                                      width = 8,
+                                      width = 6,
                                       leafletOutput('map_canada')
                                     )
                                   )
@@ -94,16 +93,15 @@ body <-
                          tabPanel(title = 'Latin America',
                                   fluidRow(
                                     column(
-                                      width = 4,
+                                      width = 6,
                                       # A static valueBox
                                       valueBox(nrow(groups_latam), "R-Ladies groups in Latin America", 
                                                icon = icon("glyphicon-blackboard"), width = 18
                                       ),
-                                      box("Created at", width = 18, DT::dataTableOutput("created_latam")
-                                      )
+                                      DT::dataTableOutput("created_latam")
                                     ),
                                     column(
-                                      width = 8,
+                                      width = 6,
                                       leafletOutput('map_latam')
                                       )
                                   )
@@ -111,16 +109,15 @@ body <-
                          tabPanel(title = 'Europe',
                                   fluidRow(
                                     column(
-                                      width = 4,
+                                      width = 6,
                                       # A static valueBox
                                       valueBox(nrow(groups_europe), "R-Ladies groups in Europe",
                                                icon = icon("glyphicon-blackboard"), width = 18
                                       ),
-                                      box("Created at", width = 18, DT::dataTableOutput("created_europe")
-                                      )
+                                      DT::dataTableOutput("created_europe")
                                     ),
                                     column(
-                                      width = 8,
+                                      width = 6,
                                       leafletOutput('map_europe')
                                       )
                                   )
@@ -128,48 +125,45 @@ body <-
                          tabPanel(title = 'Africa',
                                   fluidRow(
                                     column(
-                                      width = 4,
+                                      width = 6,
                                       # A static valueBox
                                       valueBox(nrow(groups_africa), "R-Ladies groups in Africa", 
                                                icon = icon("glyphicon-blackboard"), width = 18
                                       ),
-                                      box("Created at", width = 18, DT::dataTableOutput("created_africa")
-                                      )
+                                      DT::dataTableOutput("created_africa")
                                     ),
                                     column(
-                                      width = 8,
+                                      width = 6,
                                       leafletOutput('map_africa'))
                                   )
                          ),
                          tabPanel(title = 'Asia',
                                   fluidRow(
                                     column(
-                                      width = 4,
+                                      width = 6,
                                       # A static valueBox
                                       valueBox(nrow(groups_asia), "R-Ladies groups in Asia",
                                                icon = icon("glyphicon-blackboard"), width = 18
                                       ),
-                                      box("Created at", width = 18, DT::dataTableOutput("created_asia")
-                                      )
+                                      DT::dataTableOutput("created_asia")
                                     ),
                                     column(
-                                      width = 8,
+                                      width = 6,
                                       leafletOutput('map_asia'))
                                   )
                          ),
                          tabPanel(title = 'Australia/Oceania',
                                   fluidRow(
                                     column(
-                                      width = 4,
+                                      width = 6,
                                       # A static valueBox
                                       valueBox(nrow(groups_australia), "R-Ladies groups in Australia",
                                                icon = icon("glyphicon-blackboard"), width = 18
                                       ),
-                                      box("Created at", width = 18, DT::dataTableOutput("created_australia")
-                                      )
+                                      DT::dataTableOutput("created_australia")
                                     ),
                                     column(
-                                      width = 8,
+                                      width = 6,
                                       leafletOutput('map_australia'))
                                   )
                          )
