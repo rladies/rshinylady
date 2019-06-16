@@ -3,7 +3,7 @@ library(tidyverse)
 library(meetupr)
 
 # meetup groups ----------------------------------------------------------
-api_key <- Sys.getenv("meetup_key")
+api_key <- Sys.getenv("MEETUP_KEY")
 # this is needed when you deploy the shiny app
 # api_key <- readRDS("meetup_key.RDS")
 all_rladies_groups <- find_groups(text = "r-ladies", api_key = api_key)
