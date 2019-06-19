@@ -47,7 +47,7 @@ body <-
                    icon("meetup", lib = "font-awesome"), width = 3),
           valueBox(length(unique(rladies_groups$country)), "R-Ladies Countries", 
                    icon = icon("map-o"), width = 3),
-          valueBox(length(rladies_groups$city), "R-Ladies Cities", 
+          valueBox(length(unique(rladies_groups$city)), "R-Ladies Cities", 
                    icon = icon("map-marker"), color = "purple", width = 3),
           valueBox(sum(rladies_groups$members), "R-Ladies members on meetup.com", 
                    icon = icon("users"), width = 3)
