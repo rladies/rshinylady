@@ -1,8 +1,10 @@
 source("chapters_source.R")
+source("region_page.R")
 library(shinydashboard)
 library(shiny)
 library(leaflet)
 library(htmltools)
+library(DT)
 
 ## ui.R ##
 
@@ -52,126 +54,19 @@ body <-
           valueBox(sum(rladies_groups$members), "R-Ladies members on meetup.com", 
                    icon = icon("users"), width = 3)
         ),
-        leafletOutput('map', height = 700)
+        leafletOutput('worldmap', height = 700)
       ),
       
       # Second sidebar tab - Region
       tabItem(tabName = "region",
               navbarPage(title = 'R-Ladies',
-                         
-                         tabPanel(title = 'USA',
-                                  fluidRow(
-                                    column(width = 4,
-                                      # A static valueBox
-                                      valueBox(nrow(groups_usa), "R-Ladies groups in the US", 
-                                               icon = icon("glyphicon-blackboard"), width = 18
-                                      ),
-                                      box("Created at", width = 18, tableOutput("created_usa"))
-                                    ),
-                                    column(width = 6,
-                                      leafletOutput('map_usa')
-                                    )
-                                  )
-                         ),
-                         tabPanel(title = 'Canada',
-                                  fluidRow(
-                                    column(
-                                      width = 4,
-                                      # A static valueBox
-                                      valueBox(nrow(groups_canada), "R-Ladies groups in Canada", 
-                                               icon = icon("glyphicon-blackboard"), width = 18
-                                      ),
-                                      box("Created at", width = 18, tableOutput("created_canada")
-                                      )
-                                    ),
-                                    column(
-                                      width = 8,
-                                      leafletOutput('map_canada')
-                                    )
-                                  )
-                         ),
-                         tabPanel(title = 'Latin America',
-                                  fluidRow(
-                                    column(
-                                      width = 4,
-                                      # A static valueBox
-                                      valueBox(nrow(groups_latam), "R-Ladies groups in Latin America", 
-                                               icon = icon("glyphicon-blackboard"), width = 18
-                                      ),
-                                      box("Created at", width = 18, tableOutput("created_latam")
-                                      )
-                                    ),
-                                    column(
-                                      width = 8,
-                                      leafletOutput('map_latam')
-                                      )
-                                  )
-                         ),
-                         tabPanel(title = 'Europe',
-                                  fluidRow(
-                                    column(
-                                      width = 4,
-                                      # A static valueBox
-                                      valueBox(nrow(groups_europe), "R-Ladies groups in Europe",
-                                               icon = icon("glyphicon-blackboard"), width = 18
-                                      ),
-                                      box("Created at", width = 18, tableOutput("created_europe")
-                                      )
-                                    ),
-                                    column(
-                                      width = 8,
-                                      leafletOutput('map_europe')
-                                      )
-                                  )
-                         ),
-                         tabPanel(title = 'Africa',
-                                  fluidRow(
-                                    column(
-                                      width = 4,
-                                      # A static valueBox
-                                      valueBox(nrow(groups_africa), "R-Ladies groups in Africa", 
-                                               icon = icon("glyphicon-blackboard"), width = 18
-                                      ),
-                                      box("Created at", width = 18, tableOutput("created_africa")
-                                      )
-                                    ),
-                                    column(
-                                      width = 8,
-                                      leafletOutput('map_africa'))
-                                  )
-                         ),
-                         tabPanel(title = 'Asia',
-                                  fluidRow(
-                                    column(
-                                      width = 4,
-                                      # A static valueBox
-                                      valueBox(nrow(groups_asia), "R-Ladies groups in Asia",
-                                               icon = icon("glyphicon-blackboard"), width = 18
-                                      ),
-                                      box("Created at", width = 18, tableOutput("created_asia")
-                                      )
-                                    ),
-                                    column(
-                                      width = 8,
-                                      leafletOutput('map_asia'))
-                                  )
-                         ),
-                         tabPanel(title = 'Australia/Oceania',
-                                  fluidRow(
-                                    column(
-                                      width = 4,
-                                      # A static valueBox
-                                      valueBox(nrow(groups_australia), "R-Ladies groups in Australia",
-                                               icon = icon("glyphicon-blackboard"), width = 18
-                                      ),
-                                      box("Created at", width = 18, tableOutput("created_australia")
-                                      )
-                                    ),
-                                    column(
-                                      width = 8,
-                                      leafletOutput('map_australia'))
-                                  )
-                         )
+                         region_page_UI("USA", "USA", "R-Ladies groups in the US"),
+                         region_page_UI("Canada", "Canada", "R-Ladies groups in Canada"),
+                         region_page_UI("LatAm", "Latin America", "R-Ladies groups in Latin America"),
+                         region_page_UI("Europe", "Europe", "R-Ladies groups in Europe"),
+                         region_page_UI("Africa", "Africa", "R-Ladies groups in Africa"),
+                         region_page_UI("Asia", "Asia", "R-Ladies groups in Asia"),
+                         region_page_UI("AusOc", "Australia/Oceania", "R-Ladies groups in Australia")
               )
       ),
       tabItem(tabName = "about",
@@ -246,56 +141,21 @@ australia_popups <- paste0("<b>", groups_australia$url, "</b>", "<br/>",
 # )
 
 
-server <- function(input, output) { 
+server <- function(input, output, session) { 
   
-  output$map <- renderLeaflet({
+  output$worldmap <- renderLeaflet({
     leaflet(data = rladies_groups) %>% 
       addTiles() %>%
       addAwesomeMarkers(~lon, ~lat, popup = global_popups, icon = icons)
   })
-  output$created_usa <- renderTable(created_usa, striped = TRUE, hover = TRUE)
-  output$map_usa <- renderLeaflet({
-    leaflet(groups_usa) %>% 
-      addTiles() %>%
-      addMarkers(~lon, ~lat, popup = usa_popups) 
-  })
-  output$created_canada <- renderTable(created_canada, striped = TRUE, hover = TRUE)
-  output$map_canada <- renderLeaflet({
-    leaflet(groups_canada) %>% 
-      addTiles() %>%
-      addMarkers(~lon, ~lat, popup = canada_popups) 
-  })
-  output$created_latam <- renderTable(created_latam, striped = TRUE, hover = TRUE)
-  output$map_latam <- renderLeaflet({
-    leaflet(groups_latam) %>% 
-      addTiles() %>%
-      addMarkers(~lon, ~lat, popup = latam_popups) 
-  })
-  output$created_europe <- renderTable(created_europe, striped = TRUE, hover = TRUE)
-  output$map_europe <- renderLeaflet({
-    leaflet(groups_europe) %>%
-      addTiles() %>%
-      addMarkers(~lon, ~lat, popup = europe_popups)
-  })
-  output$created_africa <- renderTable(created_africa, striped = TRUE, hover = TRUE)
-  output$map_africa <- renderLeaflet({
-    leaflet(groups_africa) %>% 
-      addTiles() %>%
-      addMarkers(~lon, ~lat, popup = africa_popups) 
-  })
-  output$created_asia <- renderTable(created_asia, striped = TRUE, hover = TRUE)
-  output$map_asia <- renderLeaflet({
-    leaflet(groups_asia) %>% 
-      addTiles() %>%
-      addMarkers(~lon, ~lat, popup = asia_popups) 
-  })
-  output$created_australia <- renderTable(created_australia, striped = TRUE, hover = TRUE)
-  output$map_australia <- renderLeaflet({
-    leaflet(groups_australia) %>% 
-      addTiles() %>%
-      addMarkers(~lon, ~lat, popup = australia_popups) 
-  })
   
+  callModule(region_page, "USA", created_usa, groups_usa, usa_popups)
+  callModule(region_page, "Canada", created_canada, groups_canada, canada_popups)
+  callModule(region_page, "LatAm", created_latam, groups_latam, latam_popups)
+  callModule(region_page, "Europe", created_europe, groups_europe, europe_popups)
+  callModule(region_page, "Africa", created_africa, groups_africa, africa_popups)
+  callModule(region_page, "Asia", created_asia, groups_asia, asia_popups)
+  callModule(region_page, "AusOc", created_australia, groups_australia, australia_popups)
   
 }
 
